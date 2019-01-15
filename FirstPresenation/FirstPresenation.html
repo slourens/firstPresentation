@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello my name is Spencer Lourens</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Spencer Lourens" />
+    <meta name="date" content="2019-01-15" />
+    <link href="FirstPresenation_files/remark-css/default.css" rel="stylesheet" />
+    <link href="FirstPresenation_files/remark-css/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Hello my name is Spencer Lourens
+### Spencer Lourens
+### 2019-01-15
+
+---
+
+
+&lt;!-- edit name1 and name2 in the YAML above --&gt;
+
+
+
+
+```r
+# optional package installs if you want to do more below
+install.packages("leaflet")
+```
+
+
+&lt;!-- introduce yourself here --&gt;
+
+Hello my name is Spencer Lourens!
+
+Say something about what you do, what you use R Markdown for, your favorite R package, etc.
+
+[Link to next](#Cool)
+
+&lt;!-- include an image here, if you have a GitHub account use your profile pic! --&gt;
+
+![](https://github.com/slourens.png)&lt;!-- --&gt;
+
+---
+class: middle, center
+name: Cool
+
+.left[
+#Very cool!
+]
+
+.left[checking this]
+
+&lt;!-- we make the data here --&gt;
+
+--
+
+here 
+--
+is 
+--
+on 
+--
+same line
+
+.left[
+
+```r
+# getting the data
+namedata &lt;- babynames %&gt;%
+  filter(name == params$name1 | 
+           name == params$name2) %&gt;% 
+  filter(sex == "F") 
+```
+]
+
+
+&lt;!-- get and see top years for each name --&gt;
+
+.left[
+
+```r
+topyears &lt;- namedata %&gt;% 
+  group_by(name) %&gt;% 
+  top_n(1, prop) 
+```
+]
+
+
+```r
+topyears %&gt;% 
+  filter(name == params$name1)
+```
+
+```
+## # A tibble: 1 x 5
+## # Groups:   name [1]
+##    year sex   name        n     prop
+##   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   &lt;int&gt;    &lt;dbl&gt;
+## 1  1983 F     Matthew   317 0.000177
+```
+
+
+---
+
+.pull-left[
+The workflow might be as follows
+
+leading to:
+
+Increased efficiency
+]
+
+.pull-right[
+So there are plenty of ways
+
+For us to do this!
+]
+
+
+---
+class: center
+name: Filtering
+
+
+```r
+topyears %&gt;% 
+  filter(name == params$name2)
+```
+
+```
+## # A tibble: 1 x 5
+## # Groups:   name [1]
+##    year sex   name      n   prop
+##   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt;  &lt;dbl&gt;
+## 1  1981 F     Sarah 28173 0.0158
+```
+
+???
+
+Here are my notes - changing them
+
+&lt;!-- plot name popularity over time --&gt;
+
+---
+name: namePlot
+class: center, middle
+
+
+&lt;!-- where are you from? --&gt;
+
+.pull-left[
+&lt;img src="FirstPresenation_files/figure-html/testing-1.png" width="504" /&gt;
+]
+
+.pull-right[
+.left[
+
+```r
+ggplot(namedata, 
+  aes(x = year, 
+      y = prop,  
+      group = name, 
+      color = name)) + 
+  geom_line() + 
+  ggtitle(paste("Plot of", params$name2, "and", 
+                params$name1, "over time"))
+```
+]
+]
+
+
+???
+
+Here are my notes
+
+---
+
+&lt;style type="text/css"&gt;
+.pull-left {
+  width: 47%;
+  height: 80%;
+}
+.pull-right {
+  width: 47%;
+  height: 80%;
+}
+.pull-right &gt; div &gt; pre &gt; code &gt; div {
+    font-size: 9px;
+    color: blue;
+}
+&lt;/style&gt;
+
+.pull-left[
+
+```r
+x &lt;- rnorm(10, 0, 1)
+y &lt;- rnorm(100, 0, 1)
+x + y^2
+```
+
+```
+*##   [1] -0.13176570 -0.44736804  2.39108665  1.06313778  1.95708297
+##   [6] -0.31768805  1.23890102  0.39304410  1.88843061 -0.10521199
+*##  [11]  0.34190441 -0.53484715  2.02898190  0.94281440  1.81551031
+##  [16] -0.08471393  0.21320913  1.84007227  1.67149424  0.62558892
+##  [21]  1.28593688  1.86194300  2.09323816  3.63159789  1.89359686
+##  [26] -0.35785214 -0.57784690  2.61169085  0.55675753 -0.16199554
+##  [31]  0.84662477 -0.45500823  5.19106244  3.06713519  2.56547919
+##  [36] -0.36349192  5.49096399  0.17382766  0.49219957 -0.24955128
+##  [41] -1.30750835  1.02489726  2.31161315  1.12569130  1.91164161
+##  [46] -0.24988608  0.41482395  0.72831661  0.52850004  1.94826788
+##  [51] -1.21064943  5.79827207  1.41725804  2.41242108  2.03291458
+##  [56]  1.49572796 -0.35523462  0.54098472  1.19635822 -0.30465319
+##  [61] -1.25245775  0.39456959  1.55809469  1.20387946  1.79963019
+##  [66] -0.22002336  0.65077046  0.18731154  0.64614393  4.66963077
+##  [71]  3.37067331  2.21886444  1.46278643  1.69511224  2.74109810
+##  [76]  0.92387251  0.23799940  0.50288672  0.82048498  4.25997608
+##  [81] -0.31940626  3.15211391  2.64023716  1.65854620  2.58776407
+##  [86] -0.13094065  1.11733757  3.62390702  0.60449429  3.10860597
+##  [91] -1.02529269  0.31119653  3.89443815  1.56421128  5.34199057
+##  [96] -0.21626038 -0.19221142  0.42772013  0.55830883 -0.31937730
+```
+]
+
+.pull-right[
+
+```r
+not code that wont be
+*evaluated
+```
+]
+
+---
+
+
+name: code-highlight
+class: center, middle
+# Example of code highlighting
+
+&lt;style type="text/css"&gt;
+.pull-left {
+  width: 20%;
+  height: 80%;
+}
+.pull-right {
+  width: 80%;
+  height: 80%;
+}
+&lt;/style&gt;
+
+.pull-left[
+.left[
+````markdown
+```{r, eval = F}
+x &lt;- rnorm(10, 0, 1)
+y &lt;- rnorm(100, 0, 1)
+x + y^2 #&lt;&lt;
+```
+````
+]
+]
+
+.pull-right[
+
+```r
+x &lt;- rnorm(10, 0, 1)
+y &lt;- rnorm(100, 0, 1)
+*x + y^2
+```
+]
+
+I like to have 0.7805033, -0.6427239, 0.0681715, -0.0945179, 0.0953378, 0.211306, 0.6190717, -0.2146941, 1.5503292, -1.3244553 random variables
+
+---
+
+```r
+# erase this chunk option if you want to include a map
+library(leaflet)
+*leaflet() %&gt;% addTiles() %&gt;% setView(lat = 30.2621, lng = -97.7382, zoom = 17)
+```
+
+
+---
+
+[A link to filtering](#Filtering)
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "ascetic",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

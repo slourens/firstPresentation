@@ -1,0 +1,248 @@
+---
+title: "Hello my name is Spencer Lourens"
+author: "Spencer Lourens"
+date: "`r Sys.Date()`"
+output: 
+  xaringan::moon_reader:
+    nature:
+      highlightStyle: ascetic
+      highlightLines: true
+params:
+  name1: "Matthew" 
+  name2: "Sarah"
+---
+
+<!-- edit name1 and name2 in the YAML above -->
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.retina = 2)
+library(tidyverse) # load tidyverse package
+library(babynames) # load babynames package
+#library(leaflet) # uncomment to use if you install
+```
+
+```{r eval = FALSE}
+# optional package installs if you want to do more below
+install.packages("leaflet")
+```
+
+
+<!-- introduce yourself here -->
+
+Hello my name is `r rmarkdown::metadata$author`!
+
+Say something about what you do, what you use R Markdown for, your favorite R package, etc.
+
+[Link to next](#Cool)
+
+<!-- include an image here, if you have a GitHub account use your profile pic! -->
+
+```{r photo, echo = FALSE}
+knitr::include_graphics("https://github.com/slourens.png") # update USERNAME here
+```
+
+---
+class: middle, center
+name: Cool
+
+.left[
+#Very cool!
+]
+
+.left[checking this]
+
+<!-- we make the data here -->
+
+--
+
+here 
+--
+is 
+--
+on 
+--
+same line
+
+.left[
+```{r filterdata}
+# getting the data
+namedata <- babynames %>%
+  filter(name == params$name1 | 
+           name == params$name2) %>% 
+  filter(sex == "F") 
+```
+]
+
+
+<!-- get and see top years for each name -->
+
+.left[
+```{r gettopyears}
+topyears <- namedata %>% 
+  group_by(name) %>% 
+  top_n(1, prop) 
+```
+]
+
+```{r topyear-name1}
+topyears %>% 
+  filter(name == params$name1)
+```
+
+
+---
+
+.pull-left[
+The workflow might be as follows
+
+leading to:
+
+Increased efficiency
+]
+
+.pull-right[
+So there are plenty of ways
+
+For us to do this!
+]
+
+
+---
+class: center
+name: Filtering
+
+```{r topyear-name2}
+topyears %>% 
+  filter(name == params$name2)
+```
+
+???
+
+Here are my notes - changing them
+
+<!-- plot name popularity over time -->
+
+---
+name: namePlot
+class: center, middle
+
+
+<!-- where are you from? -->
+
+.pull-left[
+```{r testing, echo = F}
+ggplot(namedata, 
+  aes(x = year, 
+      y = prop,  
+      group = name, 
+      color = name)) + 
+  geom_line() + 
+  ggtitle(paste("Plot of", params$name2, "and", 
+                params$name1, "over time"))
+```
+]
+
+.pull-right[
+.left[
+```{r, ref.label = 'testing', fig.show = 'hide'}
+ggplot(namedata, 
+  aes(x = year, 
+      y = prop,  
+      group = name, 
+      color = name)) + 
+  geom_line() + ggtitle(paste("Plot of", params$name2, 
+                              "and", params$name1, "over time"))
+```
+]
+]
+
+
+???
+
+Here are my notes
+
+---
+
+```{css, echo = F}
+.pull-left {
+  width: 47%;
+  height: 80%;
+}
+.pull-right {
+  width: 47%;
+  height: 80%;
+}
+.pull-right > div > pre > code > div {
+    font-size: 9px;
+    color: blue;
+}
+```
+
+.pull-left[
+```{r, highlight.output = c(1,3)}
+x <- rnorm(10, 0, 1)
+y <- rnorm(100, 0, 1)
+x + y^2
+```
+]
+
+.pull-right[
+```{r, eval = F}
+not code that wont be
+evaluated #<<
+```
+]
+
+---
+
+
+name: code-highlight
+class: center, middle
+# Example of code highlighting
+
+```{css, echo = F}
+.pull-left {
+  width: 20%;
+  height: 80%;
+}
+.pull-right {
+  width: 80%;
+  height: 80%;
+}
+```
+
+.pull-left[
+.left[
+````markdown
+`r ''````{r, eval = F}
+x <- rnorm(10, 0, 1)
+y <- rnorm(100, 0, 1)
+x + y^2 #<<
+```
+````
+]
+]
+
+.pull-right[
+```{r, eval = F}
+x <- rnorm(10, 0, 1)
+y <- rnorm(100, 0, 1)
+x + y^2 #<<
+```
+]
+
+I like to have `r rnorm(10, 0, 1)` random variables
+
+---
+```{r eval = FALSE}
+# erase this chunk option if you want to include a map
+library(leaflet)
+leaflet() %>% addTiles() %>% setView(lat = 30.2621, lng = -97.7382, zoom = 17) #<<
+```
+
+
+---
+
+[A link to filtering](#Filtering)
+
