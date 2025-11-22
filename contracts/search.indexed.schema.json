@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SearchIndexed",
+  "type": "object",
+  "required": [
+    "upload_id",
+    "indexed_at",
+    "version"
+  ],
+  "properties": {
+    "upload_id": { "type": "string", "minLength": 1 },
+    "indexed_at": { "type": "string", "format": "date-time" },
+    "version": { "type": "integer", "minimum": 1 },
+    "terms": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}
